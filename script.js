@@ -34,15 +34,30 @@ main.addEventListener("click", () => {
 
 // MOBILE NAV 
 
-body.addEventListener("wheel",(e)=>{
-    if(e.deltaY < 0){
-        console.log(e.deltaY)
-        mobileNav.classList.remove("mobile-nav-hide")
-    } else if(e.deltaY > 0){
-        console.log(e.deltaY)
-        mobileNav.classList.add("mobile-nav-hide")
-    }
-})
+// body.addEventListener("wheel",(e)=>{
+//     if(e.deltaY < 0){
+//         console.log(e.deltaY)
+//         mobileNav.classList.remove("mobile-nav-hide")
+//     } else if(e.deltaY > 0){
+//         console.log(e.deltaY)
+//         mobileNav.classList.add("mobile-nav-hide")
+//     }
+// })
+
+let startY;
+
+window.addEventListener('touchstart', function(e) {
+  startY = e.touches[0].clientY;
+});
+
+window.addEventListener('touchmove', function(e) {
+  let currentY = e.touches[0].clientY;
+  if (currentY < startY) {
+    mobileNav.classList.remove("mobile-nav-hide")
+  } else if (currentY > startY) {
+    mobileNav.classList.add("mobile-nav-hide")
+  }
+});
 
 
 
