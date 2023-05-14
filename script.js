@@ -5,6 +5,8 @@ const btns = document.querySelectorAll('.btn')
 const main = document.querySelector('main')
 const title = document.querySelectorAll('.title')
 const mobileNav = document.querySelector('.mobile-nav')
+let OperatingSystem = "Unknown Device"
+
 
 title.forEach(tt => {
     tt.addEventListener("click", () => {
@@ -36,11 +38,17 @@ main.addEventListener("click", () => {
 
 body.addEventListener("wheel",(e)=>{
     if(e.deltaY < 0){
-        console.log(e.deltaY)
-        mobileNav.classList.remove("mobile-nav-hide")
+        // console.log(e.deltaY)
+        mobileNav.classList.remove("hide")
+        mobileNav.classList.remove("slide-down")
+
     } else if(e.deltaY > 0){
-        console.log(e.deltaY)
-        mobileNav.classList.add("mobile-nav-hide")
+        // console.log(e.deltaY)
+        mobileNav.classList.add("slide-down")
+
+        setTimeout(() => {
+            mobileNav.classList.add("hide")        
+        }, 490);
     }
 })
 
@@ -51,28 +59,29 @@ window.addEventListener('touchstart', function(e) {
 });
 
 window.addEventListener('touchmove', function(e) {
-  let currentY = e.touches[0].clientY;
+  let currentY = e.touches[0].clientY
+
   if (currentY < startY) {
-    console.log("current y: " + currentY);
-    console.log("start y: " + startY);
-    mobileNav.classList.add("mobile-nav-hide")
+    mobileNav.classList.add("slide-down")
+
+    setTimeout(() => {
+        mobileNav.classList.add("hide")        
+    }, 490);
+
   } else if (currentY > startY) {
-    console.log("current y: " + currentY);
-    console.log("start y: " + startY);
-    mobileNav.classList.remove("mobile-nav-hide")
+    mobileNav.classList.remove("hide")
+    mobileNav.classList.remove("slide-down")
+
   }
 })
 
+// DEVICE DETECTION
 
-
-
-
-
-
-
-
-
-
+if(navigator.userAgent.indexOf("Android") !== -1){
+    OperatingSystem = "Android"
+} else if(navigator.userAgent.indexOf("iPhone") !== -1 || navigator.userAgent.indexOf("iPad" !== -1)){
+    OperatingSystem = "iOS"
+}
 
 
 
