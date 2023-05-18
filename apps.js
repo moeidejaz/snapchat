@@ -1,23 +1,28 @@
-const apps = document.getElementById("apps")
-// console.log(navigator.getInstalledRelatedApps())
+const appsContainer = document.getElementById("apps");
 
-// const app = navigator.getInstalledRelatedApps()
+function displayInstalledApps(apps) {
+  let htmlContent = "";
 
-
-
-navigator.getInstalledRelatedApps()
-  .then(function(relatedApps) {
-    // Access the list of installed related apps
-    console.log(relatedApps);
-    apps.innerHTML = `<p>${relatedApps.length}</p>`
-    // Iterate over each installed app
-    relatedApps.forEach(function(app) {
-      console.log(app.platform);
-      console.log(app.url);
-      // Access other properties of the app as needed
-    });
-  })
-  .catch(function(error) {
-    // Handle any errors that occurred while retrieving the list of apps
-    console.error(error);
+  apps.forEach(function(app) {
+    htmlContent += `<p>Platform: ${app.platform}</p>`;
+    htmlContent += `<p>URL: <a href="${app.url}">${app.url}</a></p>`;
+    htmlContent += "<br>";
   });
+
+  appsContainer.innerHTML = htmlContent;
+}
+
+if ('getInstalledRelatedApps' in navigator) {
+  navigator.getInstalledRelatedApps()
+    .then(function(relatedApps) {
+      console.log(relatedApps);
+      appsContainer.innerHTML = `<p>${relatedApps.length} apps found</p>`;
+      displayInstalledApps(relatedApps);
+    })
+    .catch(function(error) {
+      console.error(error);
+      appsContainer.innerHTML = "Error retrieving the list of installed apps.";
+    });
+} else {
+  appsContainer.innerHTML = "The getInstalledRelatedApps API is not supported in this browser.";
+}
