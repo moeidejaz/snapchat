@@ -1,23 +1,23 @@
 const appsContainer = document.getElementById("apps");
 
-function displayInstalledApps(apps) {
-  let htmlContent = "";
-
-  apps.forEach(function(app) {
-    htmlContent += `<p>Platform: ${app.platform}</p>`;
-    htmlContent += `<p>URL: <a href="${app.url}">${app.url}</a></p>`;
-    htmlContent += "<br>";
+function isAppInstalled(appId, relatedApps) {
+  return relatedApps.some(function(app) {
+    return app.id === appId;
   });
-
-  appsContainer.innerHTML = htmlContent;
 }
 
 if ('getInstalledRelatedApps' in navigator) {
   navigator.getInstalledRelatedApps()
     .then(function(relatedApps) {
       console.log(relatedApps);
-      appsContainer.innerHTML = `<p>${relatedApps.length} apps found</p>`;
-      displayInstalledApps(relatedApps);
+      const snapchatAppId = 'com.snapchat.android';
+      const isSnapchatInstalled = isAppInstalled(snapchatAppId, relatedApps);
+
+      if (isSnapchatInstalled) {
+        appsContainer.innerHTML = "Snapchat is installed on your device.";
+      } else {
+        appsContainer.innerHTML = "Snapchat is not installed on your device.";
+      }
     })
     .catch(function(error) {
       console.error(error);
