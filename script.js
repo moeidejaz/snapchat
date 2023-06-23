@@ -17,8 +17,11 @@ title.forEach(tt => {
 
         if (icon.classList.contains("fa-chevron-down")) {
             icon.classList.replace("fa-chevron-down", "fa-chevron-up")
+            console.log("if");
         } else {
             icon.classList.replace("fa-chevron-up", "fa-chevron-down")
+            console.log("else");
+    
         }
 
         tt.nextElementSibling.classList.toggle("toggle")
