@@ -77,6 +77,10 @@ header>.nav-left>img {
     gap: 10px;
 }
 
+.nav-btn a {
+    text-decoration: none;
+    color: #fff;
+}
 
 /* Designing */
 /* nav */
